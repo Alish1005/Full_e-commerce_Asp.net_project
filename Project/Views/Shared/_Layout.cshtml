@@ -1,0 +1,128 @@
+﻿@using Microsoft.AspNetCore.Identity 
+@using Project.Models.Account;
+@inject SignInManager<User> signInManager 
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Project</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Front.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Project.styles.css" asp-append-version="true" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <!--ICONS-->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="Front.css">
+    <title>Trends Lebanon</title>
+</head>
+<body>
+    <header>
+        <div class="container-fluid row mt-2 position-fixed bg-light" style="z-index: 200;top: -2%; width: 100%;">
+    <div class="col-lg-9 col-md-9 col-sm-12">
+    <img  src="~/imgs/Logo.jpg" asp-append-version="true" class="rounded-circle m-2" width="5%" style="border: 1px solid black;">
+    <span class="h3">Trends Lebanon</span>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-12 text-center mt-sm-2 mt-xs-2">
+        @if (!signInManager.IsSignedIn(User)){
+        @*>>>>>>SignUP<<<<<<*@
+        <a  class="btn btn-link" asp-controller="Account" asp-action="Register"  >Sign Up</a>
+        @*>>>>>>SignUP<<<<<<End*@
+        @*>>>>>>Login<<<<<<*@
+                    <a class="btn btn-success" asp-controller="Account" asp-action="Login">Login</a>
+         @*>>>>>>Login<<<<<<End*@
+                }
+                else
+                {
+                    @*>>>>>>LogOut<<<<<<*@
+                    <div class="dropdown w-50 ">
+                        <a class="nav-link second-text fw-bold dropdown-toggle py-3 px-0 "  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle"></i> &nbsp; @User.Identity.Name
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-person-lines-fill"></i> &nbsp; Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> &nbsp;Setting</a></li>
+                            <li>
+                                <form asp-action="Logout" asp-controller="Account">
+                                  <button class="text-danger dropdown-item "><i class="bi bi-box-arrow-right"></i> &nbsp; Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+
+                    @*>>>>>>Logout<<<<<<End*@
+                        }
+    </div>
+<nav class="navbar navbar-expand-lg bg-body-tertiary text-center p-0" style=" width: 100%;">
+    <div class="container-fluid d-flex " style=" width: 70%;">
+      <button class="navbar-toggler position-absolute start-0 top-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index">Home</a>
+          </li>
+           <!--Management dropdown-->
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+             <i class="bi bi-gear-fill"></i> &nbsp; Management
+            </a>
+            <ul class="dropdown-menu text-info">
+                                    
+
+              <li><a class="dropdown-item" asp-controller="Managment" asp-action="Index"><i class="bi bi-person-lines-fill"></i>&nbsp; Account Management </a></li>
+              <li><a class="dropdown-item" asp-controller="Item" asp-action="Index" ><i class="bi bi-diagram-3-fill" ></i>&nbsp;Items Management</a></li>
+              <li><a class="dropdown-item" asp-controller="Order" asp-action="AllOrders"><i class="bi bi-basket2"></i>&nbsp;Orders Management</a></li>
+                                    <!--Statistics
+                                    <li><a class="dropdown-item" href="#"><i class="bi bi-bar-chart-fill"></i>&nbsp;Statistics</a></li>-->
+            </ul>
+            
+          </li>}
+                <!--Shop dropdown-->
+          <li class="nav-item">
+           <a class="nav-link text-info"  asp-controller="Menu" asp-action="Index" role="button" >
+              Shop
+            </a>
+          </li>
+          <li class="nav-item">
+                                <a class="nav-link" href="https://localhost:7071/Home/#about-us">About us</a>
+          </li>
+          <li class="nav-item">
+                                <a class="nav-link" href="https://localhost:7071/Home/#contact-us">Contact us</a>
+          </li >
+          <li class="nav-item">
+                                @if (signInManager.IsSignedIn(User))
+                                {
+                                    <a type="button" asp-controller="Order" asp-action="Index" asp-route-id="@User.Identity.Name" class="btn btn-info position-relative">
+                                        <i class="bi bi-cart4"></i> &nbsp; Your Orders <!--<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"> * <span class="visually-hidden">unread messages</span></span>-->
+                                    </a>
+                                }else{
+                                    <a type="button" asp-controller="Account" asp-action="Login"  class="btn btn-info position-relative">
+                                        <i class="bi bi-cart4"></i> &nbsp; Your Orders<!--<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"> * <span class="visually-hidden">unread messages</span></span>-->
+                                    </a>
+                                }
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+﻿@model Project.Models.Account.LoginVM
+
+@{
+ViewBag.Title = "Login";
+}
+<h1 style="margin-top:130px;">Login</h1>
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form method="post" asp-action="LogIn" asp-route-returnUrl="@Model.ReturnUrl">
+<div class="form-group row">
+<div class="col-sm-2">
+			<label asp-for="Username">Username:</label>
+		</div>
+<div class="col-sm-4">
+<input asp-for="Username" class="form-control border border-dark border-1" />
+</div>
+<div class="col">
+<span asp-validation-for="Username"
+class="text-danger"></span>
+</div>
+</div>
+	<div class="form-group row mt-3">
+		<div class="col-sm-2"><label asp-for="Password">Password:</label></div>
+		<div class="col-sm-4 ">
+			<input type="password" asp-for="Password" name="Password" class="form-control border border-dark border-1" />
+		</div>
+		<div class="col">
+			<span asp-validation-for="Password"
+	  class="text-danger"></span>
+		</div>
+	</div>
+	<div class="form-group row">
+		<div class=" row offset-sm-2 col-sm-4 m-2 ms-5 text-center">
+			<input type="checkbox" class="col-2" title="Remember Me"
+				id="r"   asp-for="RememberMe" class="form-check" />
+			<label for="r" class="col-5">Remember Me</label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="offset-2 col-sm-4">
+			
+			<button type="submit" class="btn btn-outline-success">
+				Log In
+			</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="offset-2 col-sm-4">
+			Not registered?
+			<a asp-action="Register">Register as a new user</a>
+		</div>
+	</div>
+</form>

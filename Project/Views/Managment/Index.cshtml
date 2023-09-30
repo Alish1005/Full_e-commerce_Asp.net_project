@@ -1,0 +1,39 @@
+﻿@using Project.Models.Account;
+@model IEnumerable<User>
+
+<h1 style="margin-top:120px;">Account Managment</h1>
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.UserName</td>
+            <td>@user.Email</td>
+            <td>@user.PhoneNumber</td>
+            <td>@user.Address</td>
+            <td>
+                    <a class="btn btn-outline-info" name="Edit" asp-controller="User" asp-action="AddToAdmin" title="Make admin" asp-route-id="@user.Id"><i class="bi bi-suit-club-fill"></i></a>&nbsp;
+                <form asp-action="BanUser">
+
+                   <!--We must add the isBan part here-->
+                      
+                    <button class="btn btn-outline-danger" asp-action="BanUser" title="Ban" asp-route-id="@user.Id"><i class="bi bi-slash-circle-fill"></i> </button>
+                    
+                </form>
+            </td>
+
+
+        </tr>
+
+    }
+    </tbody>
+</table>

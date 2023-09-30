@@ -1,0 +1,65 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<Order>
+<div style="margin-top:130px;">
+    <h1>All Orders</h1>
+    <form class="row"  asp-controller="Order" asp-action="Search">
+        <input type="text" id="search" class="input-group-text col-4" placeholder="Search" />
+        <button type="submit" asp-controller="Order" asp-action="Search" asp-route-id="#search" class="btn btn-success col-1"><i class="bi bi-search"></i></button>
+    </form>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Note</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            @if (Model.Count() > 0)
+            {
+               
+
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@order.user.UserName</td>
+                        <td>@order.user.PhoneNumber</td>
+                        <td>@order.user.Address</td>
+                        <td><img src="@order.item.IconUrl" style="height:50px;" /></td>
+                        <td>@order.item.Name</td>
+                        <td class="text-danger">@order.note</td>
+                        <td>@order.itemQuantity</td>
+                        <td>@order.totalPrice() $</td>
+                        
+                          
+                        
+                        <form asp-action="Delete">
+                            <td>
+                                @*The asp-route-id bellow are not correct !!!!!!*@
+
+                                &nbsp; <button class="btn btn-outline-success" asp-action="Done" title="Done" asp-route-id="@order.Id"><i class="bi bi-check-lg"></i></button>
+                            </td>
+                        </form>
+
+                    </tr>
+                }
+                
+
+            }
+            else
+            {
+                <tr>
+                    <td colspan="9" class="text-center fw-bold"> No orders</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

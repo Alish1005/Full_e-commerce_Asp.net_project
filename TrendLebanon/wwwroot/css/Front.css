@@ -1,0 +1,25 @@
+.shop-card:hover{
+    z-index: 100;
+    transform: scale(1.1);
+    transition: all .5s;
+}
+.shop-card{
+    transition: all .5s;
+}
+.modal-body>.btn{
+    width: 80%;
+}
+.modal-body > .btn :focus{
+    border: 1px solid black;
+    box-shadow: 3px 4px 5px cyan;
+    transition: all .5s;
+}
+
+.dashboard-a:target + .dashboard{
+position: absolute;
+left: 0;
+}
+.dashboard-a:not(:target)+ .dashboard{
+    position: absolute;
+    left: -10%;
+    }

@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Microsoft.AspNetCore.Identity
+@using Project.Models.Account;
+@inject SignInManager<User> signInManager;
+@model IEnumerable<Item>
+
+<!--Shop dropdown-->
+<!-- Card -->
+<div class="row text-center d-flex justify-content-end align-items-end" style="margin-top: 150px;">
+    
+</div>
+<div class="row text-center d-flex justify-content-center align-items-center">
+    
+    @foreach(var item in Model){
+    <!-- >>>>>>>>>>>>Card <<<<<<<<<<<<<<<<-->
+        <div class="card col-12 col-sm-3 col-md-3 m-2">
+        <!-- Card image -->
+        <div class="view overlay">
+            <img class="card-img-top" src="@item.IconUrl" alt="Card image cap">
+            <a href="#">
+                <div class="mask rgba-white-slight"></div>
+            </a>
+        </div>
+        <!-- Card content -->
+        <div class="card-body">
+         
+            <!-- Title -->
+            <h4 class="card-title">@item.Name</h4>
+            <!-- Text -->
+            <p class="card-text">@item.Description </p>
+            <!-- Button -->
+            @if(item.OFS()){
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        <a type="button" class="btn btn-primary" asp-controller="Menu" asp-action="Add_Order" asp-route-id="@item.Id">@item.Price $</a>
+                    }
+                    else
+                    {
+                        <a type="button" class="btn btn-primary" asp-controller="Account" asp-action="Login" asp-route-id="@item.Id">@item.Price $</a>
+                    }
+                    
+                    
+                    }
+                    else{
+                    <span class="badge text-bg-danger" style="width:100%;">Out Of Stock</span>
+                    <a href="#" type="button" class="btn btn-secondary" readonly>@item.Price $</a>
+                     }
+        </div>
+    </div>
+    }
+</div>

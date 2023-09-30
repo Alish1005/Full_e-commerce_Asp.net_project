@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Order>
+<div style="margin-top:130px;">
+	<h1>Your Orders</h1>
+	
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Image</th>
+				<th>Name</th>
+				<th>Price</th>
+				<th>Note</th>
+				<th>Quantity</th>
+				<th>Total</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		@if (Model.Count() > 0)
+		{
+			@foreach (var order in Model)
+			{
+
+				<tr>
+					<td><img src="@order.item.IconUrl" style="height:100px;" /></td>
+					<td>@order.item.Name</td>
+					<td>@order.item.Price $</td>
+					<td>@order.note</td>
+					<td>@order.itemQuantity</td>
+					<td>@order.totalPrice() $</td>
+					<form asp-action="Delete">
+						<td>
+							&nbsp; <button class="btn btn-outline-danger" title="Cancel Order" asp-action="DeleteOrder" asp-route-id="@order.Id"><i class="bi bi-x-lg"></i></button>
+						</td>
+					</form>
+
+				</tr>
+			}
+
+		}
+		else
+		{
+			<tr >
+				<td colspan="7" class="text-center fw-bold">You have no orders</td>
+			</tr>
+		}
+
+	</table>
+	@{
+		var total = 0.0;
+		foreach(var order in Model)
+		{
+			total += order.totalPrice();
+		}
+	}
+	<h2>Total Price: @total $</h2>
+</div>

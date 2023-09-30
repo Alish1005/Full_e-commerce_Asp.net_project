@@ -1,0 +1,86 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Item
+
+
+<div class="row" style="margin-top:120px;">
+
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>Update Item</h4>
+        </p>
+
+        <div class="row">
+
+            <form asp-action="Update">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <img id="ProfilePicturePreview" class="rounded-2" style="width:200px;" />
+                            <br />
+                            <label asp-for="IconUrl" class="control-label"></label>
+                            <input asp-for="IconUrl" id="IconUrl" class="form-control" required />
+                            <span asp-validation-for="IconUrl" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" type="text" class="form-control" required />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label"></label>
+                            <input asp-for="Description" type="text" class="form-control" required />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Price" class="control-label"></label>
+                            <input asp-for="Price" type="number" class="form-control" required />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="quantity" class="control-label"></label>
+                            <input asp-for="quantity" class="form-control" required />
+                            <span asp-validation-for="quantity" class="text-danger"></span>
+                        </div>
+                       
+                    </div>
+
+                </div>
+
+                <div class="col-md-4 offset-4 text-center">
+                    <img width="100%" id="ImageUrlPreview" />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" asp-controller="Item" asp-action="Update" value="Update" class="btn btn-outline-success float-right" />
+                    <a class="btn btn-outline-secondary" asp-action="Index">Show List</a>
+                </div>
+
+            </form>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+@section Scripts{
+
+    <script>
+
+        $(document).ready(function () {
+            var output = document.getElementById('ProfilePicturePreview');
+            output.src = $("#IconUrl").val();
+        })
+
+        $("#IconUrl").on("change", function () {
+            var output = document.getElementById('ProfilePicturePreview');
+            output.src = $(this).val();
+        })
+    </script>
+
+}
